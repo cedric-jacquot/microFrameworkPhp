@@ -1,0 +1,4 @@
+<?php ?>
+<body>
+    <h2>404 - Not Found</h2>
+</body>

@@ -1,0 +1,21 @@
+<?php
+$config = [];
+// explode .env to associative array
+foreach ($dotEnv as $constant) {
+    // .env = const separator
+    $explodedConstant = explode('=', $constant);
+    // key is in the first index
+    $key = trim($explodedConstant[0]);
+    // value the second
+    $value = trim($explodedConstant[1]);
+
+    // format value with signle or double quotes
+    if (substr($value, 0, 1) === "'") {
+        $value = (string) str_replace("'", '', $value);
+    }
+    if (substr($value, 0, 1) === '"') {
+        $value = (string) str_replace('"', '', $value);
+    }
+    // add to config array
+    $config[$key] = $value;
+}

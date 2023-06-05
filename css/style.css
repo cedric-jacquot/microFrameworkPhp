@@ -1,0 +1,13 @@
+body {
+    font-family: system-ui;
+    background-color: rgb(134, 134, 134);
+}
+header {
+    background-color: rgb(127, 245, 245);
+}
+nav {
+    background-color: rgb(162, 162, 250);
+}
+footer {
+    background-color: rgb(255, 185, 185);
+}
