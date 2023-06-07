@@ -1,6 +1,11 @@
 <?php
 if (isset($data)) {
-    require_once $data['template'] . '.php';
+    if (array_key_exists('template', $data)) {
+        require_once $data['template'] . '.php';
+    } else {
+        http_response_code(400);
+        throw new Exception("missing key 'template' in " . $class);
+    }
 }
 ?>
 

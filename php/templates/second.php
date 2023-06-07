@@ -1,7 +1,5 @@
 <?php ?>
 <body>
     <h2>Article 2</h2>
-    <?php
-    var_dump($_REQUEST);
-    ?>
+    <h3><?= $data['name'] ?></h3>
 </body>
