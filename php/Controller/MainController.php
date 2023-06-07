@@ -4,12 +4,10 @@ namespace Controller;
 
 class MainController
 {
-    public function __construct()
+    public function init()
     {
-        echo '<pre>MainController OK !</pre>';
-
         return [
-            'template'  => 'template/main',
+            'template'  => 'templates/main',
             'name'      => 'Main',
         ];
     }

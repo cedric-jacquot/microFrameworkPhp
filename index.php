@@ -11,14 +11,19 @@ error_reporting(E_ALL);
 $dotEnv = file('php/config/.env');
 require_once 'php/config/config.php';
 
-echo '<pre>' . __DIR__ . '</pre>';
-
 // GET routing
 require_once 'php/Routing/Routes.php';
-$routes = new Routes;
+$route = new Routes;
+if ($route->findController()) {
+    $class = $route->findController();
+    $controller = new $class;
+    $data = $controller->init();
+}
 
 // php templates
 require_once 'php/head.php';
 require_once 'php/header.php';
-require_once 'php/body.php';
+if (http_response_code() === 200) {
+    require_once 'php/body.php';
+}
 require_once 'php/footer.php';
