@@ -1,5 +1,8 @@
 <?php
-$config = [];
+
+// Read .env to $CONFIG array var
+
+$CONFIG = [];
 // explode .env to associative array
 foreach ($dotEnv as $constant) {
     // .env = const separator
@@ -17,5 +20,5 @@ foreach ($dotEnv as $constant) {
         $value = (string) str_replace('"', '', $value);
     }
     // add to config array
-    $config[$key] = $value;
+    $CONFIG[$key] = $value;
 }
