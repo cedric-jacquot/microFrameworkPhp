@@ -14,9 +14,11 @@ class MainController
 
     public function main2()
     {
+        echo 'main2 called';
         return [
             'template'  => 'templates/main2',
             'name'      => 'Main2',
+            'title'     => 'Titre',
         ];
     }
 }
