@@ -11,13 +11,28 @@ error_reporting(E_ALL);
 $dotEnv = file('php/config/.env');
 require_once 'php/config/config.php';
 
+// DEV = true in .env
+if ($CONFIG['DEV']) {
+    require_once 'php/debug/dump.php';
+}
+
 // GET routing
 require_once 'php/Routing/Routes.php';
 $route = new Routes;
 if ($route->findController()) {
-    $class = $route->findController();
-    $controller = new $class;
-    $data = $controller->init();
+    $routeDatas = $route->findController();
+    $className = 'Controller\\' . $routeDatas['controller'];
+    $class = new $className;
+
+    var_dump($routeDatas['method']);
+    
+    if (method_exists($class, $routeDatas['method'])) {
+        $method = $routeDatas['method'];
+        $data = $class->$method();
+    } else {
+        $data = null;
+        http_response_code() === 500;
+    }
 }
 
 // php templates

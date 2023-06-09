@@ -1,4 +1,8 @@
 <?php
+var_dump($data);
+
+dump('test');
+
 if (isset($data)) {
     if (array_key_exists('template', $data)) {
         require_once $data['template'] . '.php';

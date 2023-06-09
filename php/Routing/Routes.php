@@ -7,33 +7,50 @@ class Routes
     public function findController()
     {
         $routes = [
-            'main'      => 'MainController',
-            'first'     => 'FirstController',
-            'second'    => 'SecondController',
+            // route name GET (?page=name) => [
+            //     'controller' => 'name', 
+            //     'method' => 'name',
+            // ];
+            'main' => [
+                'controller' => 'MainController',
+                'method' => 'main',
+            ],
+            'main2' => [
+                'controller' => 'MainController',
+                'method' => 'main2',
+            ],
+            'first' => [
+                'controller' => 'FirstController',
+                'method' => 'main',
+            ],
+            'second' => [
+                'controller' => 'SecondController',
+                'method' => 'main',
+            ],
         ];
 
         if (array_key_exists('page', $_GET)) {
             if (array_key_exists($_GET['page'], $routes)) {
-                $className = $routes[$_GET['page']];
+                $className = $routes[$_GET['page']]['controller'];
             } else {
                 http_response_code(404);
                 $className = '../errors/404';
             }
         } else {
-            $className = $routes['main'];
+            $className = $routes['main']['controller'];
         }
 
         require_once 'php/Controller/' . $className . '.php';
 
-        $className = 'Controller\\' . $className;
-        if (class_exists($className)) {
-            $controller = $className;
+        $classPath = 'Controller\\' . $className;
+        if (class_exists($classPath)) {
+            $route = $routes[$_GET['page']];
         } else {
             $className = '../errors/404';
-            $controller = null;
+            $route = null;
             http_response_code(404);
         }
 
-        return $controller;
+        return $route;
     }
 }
