@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use config\Database;
+
 class MainController
 {
     public function main()
@@ -15,6 +17,9 @@ class MainController
     public function main2()
     {
         echo 'main2 called';
+
+        Database::initDb($CONFIG);
+
         return [
             'template'  => 'templates/main2',
             'name'      => 'Main2',

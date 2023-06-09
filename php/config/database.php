@@ -7,7 +7,7 @@ use PDOException;
 
 class Database
 {
-    function initDb(array $CONFIG): PDO
+    public static function initDb(array $CONFIG): PDO
     {
         try {
             $dbh = new PDO(

@@ -23,7 +23,7 @@ if ($route->findController()) {
     $routeDatas = $route->findController();
     $className = 'Controller\\' . $routeDatas['controller'];
     $class = new $className;
-    
+
     if (method_exists($class, $routeDatas['method'])) {
         $method = $routeDatas['method'];
         $data = $class->$method();
