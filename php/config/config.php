@@ -1,12 +1,28 @@
 <?php
 
-// Read .env to $CONFIG array var
+// Read .env to $GLOBALS['CONFIG']['CONFIG'] array var
+$dotEnv = file('php/config/.env');
 
-$CONFIG = [];
+// var_dump($dotEnv);
+// clean array comments and blanks
+foreach ($dotEnv as $key => $value) {
+    $value = trim($value);
+    if (
+        empty($value)
+        || str_contains($value, '#')
+    ) {
+        unset($dotEnv[$key]);
+    }
+}
+
+$GLOBALS['CONFIG'] = [];
 // explode .env to associative array
 foreach ($dotEnv as $constant) {
     // .env = const separator
     $explodedConstant = explode('=', $constant);
+
+    // var_dump($explodedConstant);
+
     // key is in the first index
     $key = trim($explodedConstant[0]);
     // value the second
@@ -20,5 +36,5 @@ foreach ($dotEnv as $constant) {
         $value = (string) str_replace('"', '', $value);
     }
     // add to config array
-    $CONFIG[$key] = $value;
+    $GLOBALS['CONFIG'][$key] = $value;
 }

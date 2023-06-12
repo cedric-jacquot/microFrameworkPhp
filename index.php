@@ -8,21 +8,27 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // config
-$dotEnv = file('php/config/.env');
 require_once 'php/config/config.php';
 
 // DEV = true in .env
-if ($CONFIG['DEV']) {
+if ($GLOBALS['CONFIG']['DEV']) {
     require_once 'php/debug/dump.php';
 }
+
+dump($GLOBALS['CONFIG']);
 
 // GET routing
 require_once 'php/Routing/Routes.php';
 $route = new Routes;
+
+dump($route);
+
 if ($route->findController()) {
     $routeDatas = $route->findController();
     $className = 'Controller\\' . $routeDatas['controller'];
     $class = new $className;
+
+    dump($class);
 
     if (method_exists($class, $routeDatas['method'])) {
         $method = $routeDatas['method'];

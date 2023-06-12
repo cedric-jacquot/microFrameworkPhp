@@ -18,7 +18,7 @@ class MainController
     {
         echo 'main2 called';
 
-        Database::initDb($CONFIG);
+        Database::initDb();
 
         return [
             'template'  => 'templates/main2',
