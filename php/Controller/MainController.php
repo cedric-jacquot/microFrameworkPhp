@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use PDO;
 use config\Database;
 
 class MainController
@@ -14,16 +15,23 @@ class MainController
         ];
     }
 
-    public function main2()
+    public function main2(PDO $pdo, Bidule $truc): array
     {
-        echo 'main2 called';
+        // database connection init
+        $pdo = Database::initDb();
 
-        Database::initDb();
+        $stmt = $pdo->query(
+            'SELECT * FROM `mainTable`;'
+        );
+        $select = $stmt->fetchall(PDO::FETCH_KEY_PAIR);
+
+        dump($select);
 
         return [
             'template'  => 'templates/main2',
             'name'      => 'Main2',
             'title'     => 'Titre',
+            'select'    => $select,
         ];
     }
 }

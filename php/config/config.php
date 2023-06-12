@@ -3,7 +3,6 @@
 // Read .env to $GLOBALS['CONFIG']['CONFIG'] array var
 $dotEnv = file('php/config/.env');
 
-// var_dump($dotEnv);
 // clean array comments and blanks
 foreach ($dotEnv as $key => $value) {
     $value = trim($value);
@@ -20,8 +19,6 @@ $GLOBALS['CONFIG'] = [];
 foreach ($dotEnv as $constant) {
     // .env = const separator
     $explodedConstant = explode('=', $constant);
-
-    // var_dump($explodedConstant);
 
     // key is in the first index
     $key = trim($explodedConstant[0]);
