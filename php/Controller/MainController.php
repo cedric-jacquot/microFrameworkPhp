@@ -15,7 +15,7 @@ class MainController
         ];
     }
 
-    public function main2(PDO $pdo, Bidule $truc): array
+    public function main2(PDO $pdo, int $entier): array
     {
         // database connection init
         $pdo = Database::initDb();
@@ -24,8 +24,6 @@ class MainController
             'SELECT * FROM `mainTable`;'
         );
         $select = $stmt->fetchall(PDO::FETCH_KEY_PAIR);
-
-        dump($select);
 
         return [
             'template'  => 'templates/main2',

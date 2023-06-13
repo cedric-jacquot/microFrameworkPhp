@@ -35,17 +35,15 @@ if ($route->findController()) {
         // load needed method
         $method = $routeDatas['method'];
 
-        // refelection to autoload parameters
+        // reflection to autoload parameters
         $reflectionClass = new ReflectionClass($class);
         $params = $reflectionClass->getMethod($method)->getParameters();
-        var_dump($reflectionClass);
-        var_dump($params);
-        foreach ($params as $key => $param) {
-            echo dump($param);
+        dump($params);
+        $autoloadedParams = [];
+        foreach ($params as $param) {
+            dump($param->getType()->getName());
+            $autoloadedParams[] = $param->getType()->getName();
         }
-        // if (array_search()) {
-
-        // }
 
         // load class method
         $data = $class->$method();
