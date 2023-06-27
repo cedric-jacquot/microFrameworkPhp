@@ -24,13 +24,20 @@ foreach ($dotEnv as $constant) {
     $key = trim($explodedConstant[0]);
     // value the second
     $value = trim($explodedConstant[1]);
-
+    
     // format value with signle or double quotes
     if (substr($value, 0, 1) === "'") {
         $value = (string) str_replace("'", '', $value);
     }
     if (substr($value, 0, 1) === '"') {
         $value = (string) str_replace('"', '', $value);
+    }
+
+    // convert string to bool if needed
+    if ($value === 'false') {
+        $value = false;
+    } elseif ($value === 'true') {
+        $value = true;
     }
     // add to config array
     $GLOBALS['CONFIG'][$key] = $value;

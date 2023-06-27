@@ -1,6 +1,8 @@
 <?php
 
+use config\AutoloadMethod;
 use Routing\Routes;
+
 
 // autoloader
 spl_autoload_register(function ($class) {
@@ -22,9 +24,14 @@ if ($GLOBALS['CONFIG']['DEV']) {
     require_once 'php/debug/dump.php';
 }
 
+dump($GLOBALS['CONFIG']);
+
 // GET routing
 require_once 'php/Routing/Routes.php';
 $route = new Routes;
+
+dump($route);
+
 
 if ($route->findController()) {
     $routeDatas = $route->findController();
@@ -32,21 +39,12 @@ if ($route->findController()) {
     $class = new $className;
 
     if (method_exists($class, $routeDatas['method'])) {
-        // load needed method
-        $method = $routeDatas['method'];
-
-        // reflection to autoload parameters
-        $reflectionClass = new ReflectionClass($class);
-        $params = $reflectionClass->getMethod($method)->getParameters();
-        dump($params);
-        $autoloadedParams = [];
-        foreach ($params as $param) {
-            dump($param->getType()->getName());
-            $autoloadedParams[] = $param->getType()->getName();
+        if ((bool) $GLOBALS['CONFIG']['AUTOLOADER_METHOD']) {
+            // load needed methods
+            $autoloadMethod = new AutoloadMethod($class, $routeDatas);
+        } else {
+            throw new Exception('autoloder is not active !');
         }
-
-        // load class method
-        $data = $class->$method();
     } else {
         $data = null;
         http_response_code() === 500;
