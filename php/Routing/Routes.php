@@ -29,8 +29,12 @@ class Routes
             ],
         ];
 
+        
+
         if (array_key_exists('page', $_GET)) {
             if (array_key_exists($_GET['page'], $routes)) {
+
+
                 $className = $routes[$_GET['page']]['controller'];
             } else {
                 http_response_code(404);
@@ -43,14 +47,18 @@ class Routes
         require_once 'php/Controller/' . $className . '.php';
 
         $classPath = 'Controller\\' . $className;
+
         if (class_exists($classPath)) {
-            $route = $routes[$_GET['page']];
+            if (array_key_exists('page', $_GET)) {
+                $route = $routes[$_GET['page']];
+            } else {
+                $route = $routes['main']['controller'];
+            }
         } else {
             $className = '../errors/404';
             $route = null;
             http_response_code(404);
         }
-
         return $route;
     }
 }

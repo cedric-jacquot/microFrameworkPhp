@@ -1,15 +1,6 @@
 <?php
 
-use config\AutoloadMethod;
 use Routing\Routes;
-
-
-// autoloader
-spl_autoload_register(function ($class) {
-    $className = str_replace('\\', '/', $class);
-    include 'php/' . $className . '.php';
-});
-
 
 // report all errors
 ini_set('display_errors', 1);
@@ -32,24 +23,19 @@ $route = new Routes;
 
 dump($route);
 
+dump($_GET);
 
-if ($route->findController()) {
-    $routeDatas = $route->findController();
-    $className = 'Controller\\' . $routeDatas['controller'];
-    $class = new $className;
+// if ($route->findController()) {
+//     $routeDatas = $route->findController();
 
-    if (method_exists($class, $routeDatas['method'])) {
-        if ((bool) $GLOBALS['CONFIG']['AUTOLOADER_METHOD']) {
-            // load needed methods
-            $autoloadMethod = new AutoloadMethod($class, $routeDatas);
-        } else {
-            throw new Exception('autoloder is not active !');
-        }
-    } else {
-        $data = null;
-        http_response_code() === 500;
-    }
-}
+//     dump($routeDatas);
+
+//     $className = 'Controller\\' . $routeDatas['controller'];
+//     $class = new $className;
+//     } else {
+//         $data = null;
+//         http_response_code() === 500;
+// }
 
 // php templates
 require_once 'php/head.php';

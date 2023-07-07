@@ -25,7 +25,7 @@ foreach ($dotEnv as $constant) {
     // value the second
     $value = trim($explodedConstant[1]);
     
-    // format value with signle or double quotes
+    // format value with single or double quotes
     if (substr($value, 0, 1) === "'") {
         $value = (string) str_replace("'", '', $value);
     }
