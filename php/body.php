@@ -1,7 +1,12 @@
 <?php
 
+dump($data);
+
 if (isset($data)) {
     if (array_key_exists('template', $data)) {
+
+        echo "template OK !";
+
         require_once $data['template'] . '.php';
     } else {
         http_response_code(400);

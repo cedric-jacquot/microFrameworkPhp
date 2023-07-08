@@ -15,7 +15,7 @@ class MainController
         ];
     }
 
-    public function main2(PDO $pdo): array
+    public function main2(): array
     {
         // database connection init
         $pdo = Database::initDb();

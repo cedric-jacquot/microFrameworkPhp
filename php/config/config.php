@@ -1,6 +1,6 @@
 <?php
 
-// Read .env to $GLOBALS['CONFIG']['CONFIG'] array var
+// Read .env to $GLOBALS['CONFIG'] array var
 $dotEnv = file('php/config/.env');
 
 // clean array comments and blanks
@@ -24,7 +24,7 @@ foreach ($dotEnv as $constant) {
     $key = trim($explodedConstant[0]);
     // value the second
     $value = trim($explodedConstant[1]);
-    
+
     // format value with single or double quotes
     if (substr($value, 0, 1) === "'") {
         $value = (string) str_replace("'", '', $value);
@@ -41,4 +41,18 @@ foreach ($dotEnv as $constant) {
     }
     // add to config array
     $GLOBALS['CONFIG'][$key] = $value;
+}
+
+// DEV = true in .env
+if ($GLOBALS['CONFIG']['DEV']) {
+    // activate more visual dumper
+    require_once 'php/debug/dump.php';
+
+    // test dump with .env vars
+    dump($GLOBALS['CONFIG']);
+
+    // report all errors in dev mode
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 }

@@ -4,9 +4,14 @@ namespace Routing;
 
 class Routes
 {
-    public function findController()
+    /**
+     * Return array with Controller and Method used from GET
+     * @return array $route
+     */
+    public function findController(): array|null
     {
         $routes = [
+            // exemple de route à créer :
             // route name GET (?page=name) => [
             //     'controller' => 'name', 
             //     'method' => 'name',
@@ -29,25 +34,25 @@ class Routes
             ],
         ];
 
-        
-
+        // datas from GET
         if (array_key_exists('page', $_GET)) {
             if (array_key_exists($_GET['page'], $routes)) {
-
-
                 $className = $routes[$_GET['page']]['controller'];
             } else {
+                // else error 404
                 http_response_code(404);
                 $className = '../errors/404';
             }
         } else {
+            // main Controller by default
             $className = $routes['main']['controller'];
         }
 
+        // include Class
         require_once 'php/Controller/' . $className . '.php';
 
+        // test if Class exists
         $classPath = 'Controller\\' . $className;
-
         if (class_exists($classPath)) {
             if (array_key_exists('page', $_GET)) {
                 $route = $routes[$_GET['page']];
@@ -55,6 +60,7 @@ class Routes
                 $route = $routes['main']['controller'];
             }
         } else {
+            // else 404
             $className = '../errors/404';
             $route = null;
             http_response_code(404);

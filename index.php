@@ -2,40 +2,30 @@
 
 use Routing\Routes;
 
-// report all errors
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // config
 require_once 'php/config/config.php';
-
-// DEV = true in .env
-if ($GLOBALS['CONFIG']['DEV']) {
-    require_once 'php/debug/dump.php';
-}
-
-dump($GLOBALS['CONFIG']);
 
 // GET routing
 require_once 'php/Routing/Routes.php';
 $route = new Routes;
 
-dump($route);
+// find controller from GET
+if ($route->findController()) {
+    // return Controller and Method defined in Routes.php array
+    $routeDatas = $route->findController();
+    // Create Class from Route
+    $className = 'Controller\\' . $routeDatas['controller'];
+    $class = new $className;
+    // Create Method from Route
+    $method = $routeDatas['method'];
 
-dump($_GET);
-
-// if ($route->findController()) {
-//     $routeDatas = $route->findController();
-
-//     dump($routeDatas);
-
-//     $className = 'Controller\\' . $routeDatas['controller'];
-//     $class = new $className;
-//     } else {
-//         $data = null;
-//         http_response_code() === 500;
-// }
+    // $data return vars from Controller
+    $data = $class->$method();
+} else {
+    // else return error
+    $data = null;
+    http_response_code() === 500;
+}
 
 // php templates
 require_once 'php/head.php';
