@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+// head example
+?>
 
 <!DOCTYPE html>
 <html lang="fr">

@@ -1,4 +1,6 @@
-
+<?php
+// header example
+?>
 <header>
     <p>Header</p>
 </header>

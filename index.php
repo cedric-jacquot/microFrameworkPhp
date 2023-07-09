@@ -2,6 +2,12 @@
 
 use Routing\Routes;
 
+// defines classes path
+spl_autoload_register(function ($class) {
+    $className = str_replace('\\', '/', $class);
+    include 'php/' . $className . '.php';
+});
+
 // config
 require_once 'php/config/config.php';
 
@@ -27,7 +33,7 @@ if ($route->findController()) {
     http_response_code() === 500;
 }
 
-// php templates
+// and html output
 require_once 'php/head.php';
 require_once 'php/header.php';
 if (http_response_code() === 200) {
