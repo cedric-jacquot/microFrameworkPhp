@@ -16,9 +16,12 @@ require_once 'php/Routing/Routes.php';
 $route = new Routes;
 
 // find controller from GET
-if ($route->findController()) {
-    // return Controller and Method defined in Routes.php array
-    $routeDatas = $route->findController();
+// return Controller and Method defined in Routes.php array
+$routeDatas = $route->findController();
+if ($routeDatas) {
+
+    dump($routeDatas);
+
     // Create Class from Route
     $className = 'Controller\\' . $routeDatas['controller'];
     $class = new $className;

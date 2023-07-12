@@ -8,7 +8,7 @@ class Routes
      * Return array with Controller and Method used from GET
      * @return array $route
      */
-    public function findController(): array|null
+    public function findController(): mixed
     {
         $routes = [
             // exemple de route à créer :
@@ -57,7 +57,7 @@ class Routes
             if (array_key_exists('page', $_GET)) {
                 $route = $routes[$_GET['page']];
             } else {
-                $route = $routes['main']['controller'];
+                $route = $routes['main'];
             }
         } else {
             // else 404
